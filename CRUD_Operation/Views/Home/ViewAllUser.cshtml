@@ -1,0 +1,108 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+
+
+<style>
+    #example {
+        color: forestgreen !important;
+        background-color: white !important;
+    }
+</style>
+<style>
+    h2 {
+        color: forestgreen !important;
+        background-color: white !important;
+    }
+</style>
+<style>
+    #AddUser {
+        color: forestgreen !important;
+        background-color: white !important;
+        margin : 30px;
+        font-size :large;
+    }
+</style>
+
+<h2>View All Users</h2>
+<a id="AddUser" href="Index">Index</a>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <table id="example" class="table table-borderd" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Education
+                        </th>
+                        <th>
+                            Hobbies
+                        </th>
+                        <th>
+                            Photo
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (CRUD_Operation.EF.tbluser item in ViewBag.detail)
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.Gender
+                            </td>
+                            <td>
+                                @item.Education
+                            </td>
+                            <td>
+                                @item.Hobbies
+                            </td>
+                            <td>
+                                <img src="../@item.Image" width="150" height="150" alt="@item.Image" />
+                            </td>
+                            <td>
+                                <a class="btn btn-link" href="Index/@item.Id">Edit</a> |
+                                <a class="btn btn-link" onclick="return confirm('Are u sure??');" href="Delete/@item.Id">Delete</a>
+                            </td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,240 @@
+﻿@model CRUD_Operation.EF.tbluser
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Creative Colorlib SignUp Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- Custom Theme files -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+    <!-- //web font -->
+    <link href="~/Content/RegApp.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- main -->
+    <div class="main-w3layouts wrapper">
+        <h1>MY REGAPP FORM</h1>
+        @if (!String.IsNullOrWhiteSpace(ViewBag.msg))
+        {
+            @:<script type="text/javascript">alert('@ViewBag.msg')</script>
+        }
+        <div class="main-agileinfo">
+            <div class="agileits-top">
+                <form action="Index" method="post" enctype="multipart/form-data">
+                    @if (Model.Id > 0)
+                    {
+                        <input type="hidden" name="uid" value="@Model.Id" />
+                        <div class="mb-3">
+                            <label for="exampleInputName" class="form-label">User Name</label>
+                            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value="@Model.Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email ID</label>
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" value="@Model.Email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" value="@Model.Password">
+                        </div>
+                        <label for="exampleInputName" class="form-label">Gender  :</label>
+                        if (Model.Gender == "Male")
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="gender" value="Male" checked>
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="gender" value="Female">
+                                <label class="form-check-label" for="inlineRadio2">Female</label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="gender" value="Female" checked>
+                                <label class="form-check-label" for="inlineRadio2">Female</label>
+                            </div>
+                        }
+
+
+                        <br /><br />
+                        <div class="mb-3">
+                            <select class="form-select" id="education" name="education">
+                                <option selected>@Model.Education</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="BCA">BCA</option>
+                                <option value="MCA">MCA</option>
+                            </select>
+                        </div>
+                        <br />
+                        <div class="form-group row" style="padding:0px">
+                            <div class="form-group row">
+                                <div class="col-sm-2">Hobbies</div>
+                                <div class="col-sm-10">
+
+
+                                    <div class="form-check">
+
+                                        @foreach (string item in ViewBag.hobbies)
+                                            {
+                                                var selectedhobbies = Model.Hobbies.Split(',');
+                                                bool isselected = false;
+                                                foreach (var selected in selectedhobbies)
+                                                {
+                                                    if (selected.ToString().Trim() == item)
+                                                    {
+                                                        isselected = true;
+                                                    }
+                                                }
+                                                if (isselected)
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="hobbies" name="hobbies" value="@item" checked>
+                                                    <label class="form-check-label" for="bservices">
+                                                        @item
+                                                    </label><br />
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="checkbox" id="hobbies" name="hobbies" value="@item">
+                                                    <label class="form-check-label" for="bservices">
+                                                        @item
+                                                    </label><br />
+                                                }
+
+
+                                            } 
+
+                                        @*@{var arr = Model.Hobbies.Split(',');
+                                        }
+
+                                        @foreach (string item in ViewBag.hobbies as List<string>)
+                                        {
+
+                                            <input  type="checkbox" name="hobbies" value="@item"
+                                                   @foreach (var it in arr)
+                                                   {
+                                                       if (it == item)
+                                                       { 
+                                                           <text> checked="checked" </text> 
+                                                       }
+                                                   } />
+                                                   @item
+
+                                            }*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupFile01">Upload Image</label>
+                            <input type="hidden" name="imgval" value="@Model.Image" />
+                            <img src="@Model.Image" alt="@Model.Image" hight="300" width="300" />
+                            <input type="file" class="form-control" id="ufile" name="ufile">
+                        </div><br />
+                        <div class="mb-3">
+                            <button type="submit" onclick="return alert('updated');" class="btn btn-outline-light">Update</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="mb-3">
+                            <label for="exampleInputName" class="form-label">User Name</label>
+                            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email ID</label>
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        <label for="exampleInputName" class="form-label">Gender  :</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
+                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender" value="Female">
+                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                        </div>
+                        <br /><br />
+                        <div class="mb-3">
+                            <select class="form-select" id="education" name="education">
+                                <option selected>Select Education</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="BCA">BCA</option>
+                                <option value="MCA">MCA</option>
+                            </select>
+                        </div>
+                        <br />
+                        <div class="form-group row" style="padding:0px">
+                            <div class="form-group row">
+                                <div class="col-sm-2">Hobbies</div>
+                                <div class="col-sm-10">
+
+
+                                    <div class="form-check">
+
+                                        @foreach (string item in ViewBag.hobbies)
+                                        {
+
+                                            <input class="form-check-input" type="checkbox" id="hobbies" name="hobbies" value="@item">
+                                            <label class="form-check-label" for="bservices">
+                                                @item
+                                            </label><br />
+
+                                        }
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupFile01">Upload Image</label>
+                            <input type="file" class="form-control" id="ufile" name="ufile">
+                        </div><br />
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-outline-light">Apply Now</button>
+                        </div>
+                    }
+
+                </form>
+
+            </div>
+        </div>
+
+        <ul class="colorlib-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <!-- //main -->
+</body>
+</html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
